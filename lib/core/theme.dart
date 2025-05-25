@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   // 1) Color Palette
@@ -11,10 +12,34 @@ class AppTheme {
   static const String fontFamily = 'Nunito';
 
   // 2) Text Styles
-  static final TextTheme textTheme = TextTheme(
-    headlineSmall: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: textDark, fontFamily: fontFamily),
-    titleMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: textDark, fontFamily: fontFamily),
-    bodyMedium: TextStyle(fontSize: 14, color: textDark, fontFamily: fontFamily),
+  static final TextTheme textTheme = GoogleFonts.nunitoTextTheme(
+    TextTheme(
+      headlineSmall: TextStyle(
+        fontSize: 32,
+        fontWeight: FontWeight.w900,
+        color: accent,
+        letterSpacing: 1.2,
+        shadows: [
+          Shadow(
+            color: Colors.black12,
+            offset: Offset(0, 2),
+            blurRadius: 4,
+          ),
+        ],
+      ),
+      titleMedium: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.w700,
+        color: textDark,
+        letterSpacing: 0.8,
+      ),
+      bodyMedium: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        color: secondary,
+        letterSpacing: 0.5,
+      ),
+    ),
   );
 
   // 3) Corner Radius & Spacing
@@ -45,7 +70,7 @@ class AppTheme {
         ),
         scaffoldBackgroundColor: bgLight,
         textTheme: textTheme,
-        fontFamily: fontFamily,
+        fontFamily: null,
         appBarTheme: AppBarTheme(
           color: primary,
           elevation: 0,

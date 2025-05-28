@@ -259,7 +259,7 @@ class _AboutCard extends StatelessWidget {
               style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
-            const Text( // Hardcoded as per instructions
+            Text( // Removed const
               'Lang Fusion is a language learning app designed to help you learn new languages through immersive and interactive modules.',
               style: textTheme.bodyMedium,
             ),

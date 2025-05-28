@@ -74,14 +74,14 @@ class _HomeScreenState extends State<HomeScreen> {
     final bool isWideScreen = screenWidth > wideScreenBreakpoint;
 
     final mainDrawer = app_drawer.MainDrawer(
-      userName: S.of(context).userName, // Using direct getter from S class
-      userSubtitle: S.of(context).userSubtitle, // Using direct getter from S class
+      userName: S.of(context).translate('userName'), // Using translate method
+      userSubtitle: S.of(context).translate('userSubtitle'), // Using translate method
     );
 
     // Using ModuleListScreen as the body for HomeScreen for now.
     // This might be swapped with LearningModulesScreen or another widget based on app flow.
     Widget currentScreenBody = ModuleListScreen();
-    String currentTitle = S.of(context).modules; // Default title for home
+    String currentTitle = S.of(context).translate('modules'); // Default title for home, using translate method
 
     // Example: If you want LearningModulesScreen to be the default on wide screens
     // if (isWideScreen) {

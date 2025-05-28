@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:lang_fusion/data/repositories/learning_repository.dart';
 import 'package:lang_fusion/core/models/module.dart';
-import 'package:lang_fusion/l10n/l10n.dart'; // For S.of(context).key_name
+import '../../l10n/l10n.dart'; // Corrected to relative import path
 
 class LearningModulesScreen extends StatefulWidget {
   const LearningModulesScreen({super.key});
@@ -26,7 +26,7 @@ class _LearningModulesScreenState extends State<LearningModulesScreen> {
     String appBarTitle = "Learning Modules"; // Default
     try {
       // Assuming 'learning_modules_title' will be available via S class
-      appBarTitle = S.of(context).learning_modules_title;
+      appBarTitle = S.of(context).translate('learning_modules_title'); // Using translate method
     } catch (e) {
       print('Localization key "learning_modules_title" not found, using default. Error: $e');
     }

@@ -12,7 +12,8 @@ const Map<String, String> zhTranslations = {
   
   // Drawer menu
   'home': '首页',
-  'modules': '课程',
+  'modules': '课程', // Existing entry
+  'learning_modules_title': '学习模块', // New key
   'favorites': '收藏',
   'progress': '进度',
   'settings': '设置',

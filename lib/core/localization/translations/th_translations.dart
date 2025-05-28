@@ -13,6 +13,7 @@ const Map<String, String> thTranslations = {
   // Drawer menu
   'home': '[TH] Home',
   'modules': '[TH] Modules',
+  'learning_modules_title': '[TH] Learning Modules', // New key
   'favorites': '[TH] Favorites',
   'progress': '[TH] Progress',
   'settings': '[TH] Settings',

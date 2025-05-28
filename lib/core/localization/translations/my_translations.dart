@@ -12,7 +12,8 @@ const Map<String, String> myTranslations = {
   
   // Drawer menu
   'home': 'ပင်မစာမျက်နှာ',
-  'modules': 'သင်ခန်းစာများ',
+  'modules': 'သင်ခန်းစာများ', // Existing entry
+  'learning_modules_title': 'သင်ယူမှု အပိုင်းများ', // New key
   'favorites': 'အကြိုက်ဆုံးများ',
   'progress': 'တိုးတက်မှု',
   'settings': 'ဆက်တင်များ',

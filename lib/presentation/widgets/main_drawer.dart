@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../core/theme.dart';
 import '../../core/localization/app_localizations.dart';
 import 'package:flutter/services.dart';
 
@@ -113,6 +114,12 @@ class MainDrawer extends StatelessWidget {
                   label: AppLocalizations.of(context).translate('modules'),
                   onTap: () => navigateTo('/modules'),
                   isSelected: currentRoute == '/modules',
+                ),
+                DrawerNavItem( // New Item for Learning Modules
+                  icon: Icons.school_rounded,
+                  label: AppLocalizations.of(context).translate('learning_modules_title'),
+                  onTap: () => navigateTo('/learning_modules'),
+                  isSelected: currentRoute == '/learning_modules',
                 ),
                 DrawerNavItem(
                   icon: Icons.favorite_rounded,

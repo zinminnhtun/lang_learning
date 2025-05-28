@@ -13,6 +13,7 @@ const Map<String, String> enTranslations = {
   // Drawer menu
   'home': 'Home',
   'modules': 'Modules',
+  'learning_modules_title': 'Learning Modules', // New key
   'favorites': 'Favorites',
   'progress': 'Progress',
   'settings': 'Settings',

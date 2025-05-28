@@ -1,13 +1,15 @@
+// lib/main.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'core/theme.dart';
 import 'core/theme_notifier.dart';
-import 'generated/l10n.dart'; 
+import 'l10n/l10n.dart'; // Corrected import for localization
 import 'core/providers/language_provider.dart';
-import 'presentation/screens/word_list_screen.dart';
+// import 'presentation/screens/word_list_screen.dart'; // Assuming this is for a different feature
 import 'presentation/screens/settings_screen.dart';
-import 'presentation/screens/module_list_screen.dart';
+import 'presentation/screens/module_list_screen.dart'; // This might be the original/generic module list
+import 'presentation/screens/learning_modules_screen.dart'; // Import new screen
 import 'presentation/widgets/main_drawer.dart' as app_drawer; // Import with alias
 
 void main() => runApp(const MyApp());
@@ -26,9 +28,9 @@ class MyApp extends StatelessWidget {
         builder: (context, themeNotifier, languageProvider, _) => MaterialApp(
           title: 'Lang Fusion',
           theme: AppTheme.lightTheme,
-          darkTheme: AppTheme.darkTheme, // Use the new dark theme
+          darkTheme: AppTheme.darkTheme,
           themeMode: themeNotifier.themeMode,
-          home: const HomeScreen(),
+          home: const HomeScreen(), // Assuming HomeScreen is the main entry point with the drawer
           locale: languageProvider.currentLocale,
           supportedLocales: const [
             Locale('en', ''), // English
@@ -43,9 +45,10 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           routes: {
-            '/home': (_) => HomeScreen(),
-            '/modules': (_) => ModuleListScreen(),
+            '/home': (_) => const HomeScreen(),
+            '/modules': (_) => ModuleListScreen(), // Existing module screen
             '/settings': (_) => SettingsScreen(),
+            '/learning_modules': (_) => const LearningModulesScreen(), // New route
           },
         ),
       ),
@@ -53,6 +56,9 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// Assuming HomeScreen is where the MainDrawer is typically placed.
+// If ModuleListScreen was the original 'home', this structure might need adjustment,
+// but for this task, HomeScreen is assumed as the one with the drawer.
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -67,45 +73,50 @@ class _HomeScreenState extends State<HomeScreen> {
     const double wideScreenBreakpoint = 1200.0;
     final bool isWideScreen = screenWidth > wideScreenBreakpoint;
 
-    // Use the imported MainDrawer
     final mainDrawer = app_drawer.MainDrawer(
-      userName: S.of(context).translate('userName'),
-      userSubtitle: S.of(context).translate('userSubtitle'),
+      userName: S.of(context).userName, // Using direct getter from S class
+      userSubtitle: S.of(context).userSubtitle, // Using direct getter from S class
     );
 
+    // Using ModuleListScreen as the body for HomeScreen for now.
+    // This might be swapped with LearningModulesScreen or another widget based on app flow.
+    Widget currentScreenBody = ModuleListScreen();
+    String currentTitle = S.of(context).modules; // Default title for home
+
+    // Example: If you want LearningModulesScreen to be the default on wide screens
+    // if (isWideScreen) {
+    //   currentScreenBody = const LearningModulesScreen();
+    //   currentTitle = S.of(context).learning_modules_title;
+    // }
+
+
     if (isWideScreen) {
-      // Wide screen layout: Persistent drawer
       return Scaffold(
         appBar: AppBar(
-          title: Text('LangFusion'), // Or your app title
-          automaticallyImplyLeading: false, // No hamburger icon
+          title: Text(currentTitle),
+          automaticallyImplyLeading: false,
         ),
         body: Row(
           children: [
             SizedBox(
-              width: 280, // Fixed width for the persistent drawer
+              width: 280,
               child: mainDrawer,
             ),
             const VerticalDivider(thickness: 1, width: 1),
             Expanded(
-              child: ModuleListScreen(),
+              child: currentScreenBody,
             ),
           ],
         ),
       );
     } else {
-      // Narrow screen layout: Slide-out drawer
       return Scaffold(
         drawer: mainDrawer,
         appBar: AppBar(
-          title: Text('LangFusion'), // Or your app title
-          // Hamburger icon will be automatically added by Scaffold
+          title: Text(currentTitle),
         ),
-        body: ModuleListScreen(),
+        body: currentScreenBody,
       );
     }
   }
 }
-// Removed MyHomePage, local MainDrawer, and local _DrawerItem classes
-// The HomeScreen now explicitly uses app_drawer.MainDrawer from the widgets directory.
-// Localization delegates are unaffected.

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import '../../core/theme.dart';
-import '../../core/localization/app_localizations.dart';
 import 'package:flutter/services.dart';
+import '../../l10n/l10n.dart'; // Import for gen_l10n AppLocalizations
+import '../../core/localization/language.dart'; // Import for Language class
 
 class MainDrawer extends StatelessWidget {
   final String userName;
   final String userSubtitle;
   final String version;
 
-  const MainDrawer({super.key, 
+  const MainDrawer({
+    super.key,
     required this.userName,
     required this.userSubtitle,
     this.version = "1.0.0",
@@ -20,19 +21,22 @@ class MainDrawer extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
-    
+    final loc = AppLocalizations.of(context); // Nullable AppLocalizations
+
     // Helper function to handle navigation and close drawer
     void navigateTo(String routeName) {
       Navigator.pop(context); // Close the drawer
-      // Prevent pushing the same route again if already on it
       if (currentRoute != routeName) {
         Navigator.pushNamed(context, routeName);
       }
     }
 
+    // Determine current language display name
+    String currentLanguageDisplayName = (loc != null ? Language.getDisplayLanguage(loc.localeName) : '');
+
     return Drawer(
       backgroundColor: colorScheme.surface,
-      elevation: 0, // Flatter design
+      elevation: 0,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topRight: Radius.circular(16),
@@ -58,7 +62,6 @@ class MainDrawer extends StatelessWidget {
               bottom: false,
               child: Column(
                 children: [
-                  // User Avatar
                   Container(
                     padding: const EdgeInsets.all(4),
                     decoration: BoxDecoration(
@@ -75,13 +78,11 @@ class MainDrawer extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  // User Name
                   Text(
-                    userName,
+                    userName, // Passed as parameter
                     style: textTheme.titleLarge?.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 4),
-                  // User Status/Role
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                     decoration: BoxDecoration(
@@ -89,7 +90,7 @@ class MainDrawer extends StatelessWidget {
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Text(
-                      userSubtitle,
+                      userSubtitle, // Passed as parameter
                       style: textTheme.bodyMedium?.copyWith(color: Colors.white),
                     ),
                   ),
@@ -105,36 +106,35 @@ class MainDrawer extends StatelessWidget {
               children: [
                 DrawerNavItem(
                   icon: Icons.home_rounded,
-                  label: AppLocalizations.of(context).translate('home'),
+                  label: 'Home', // Placeholder
                   onTap: () => navigateTo('/home'),
                   isSelected: currentRoute == '/home' || currentRoute == '/',
                 ),
                 DrawerNavItem(
                   icon: Icons.menu_book_rounded,
-                  label: AppLocalizations.of(context).translate('modules'),
+                  label: 'Modules', // Placeholder
                   onTap: () => navigateTo('/modules'),
                   isSelected: currentRoute == '/modules',
                 ),
-                DrawerNavItem( // New Item for Learning Modules
+                DrawerNavItem( 
                   icon: Icons.school_rounded,
-                  label: AppLocalizations.of(context).translate('learning_modules_title'),
+                  label: 'Learning Modules', // Placeholder
                   onTap: () => navigateTo('/learning_modules'),
                   isSelected: currentRoute == '/learning_modules',
                 ),
                 DrawerNavItem(
                   icon: Icons.favorite_rounded,
-                  label: AppLocalizations.of(context).translate('favorites'),
+                  label: 'Favorites', // Placeholder
                   onTap: () => navigateTo('/favorites'),
                   isSelected: currentRoute == '/favorites',
                 ),
                 DrawerNavItem(
                   icon: Icons.bar_chart_rounded,
-                  label: AppLocalizations.of(context).translate('progress'),
+                  label: 'Progress', // Placeholder
                   onTap: () => navigateTo('/progress'),
                   isSelected: currentRoute == '/progress',
                 ),
                 
-                // Divider with label
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   child: Row(
@@ -145,7 +145,7 @@ class MainDrawer extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: Text(
-                          AppLocalizations.of(context).translate('settings').toUpperCase(),
+                          (loc?.settings ?? 'Settings').toUpperCase(),
                           style: textTheme.bodySmall?.copyWith(
                             color: colorScheme.onSurface.withOpacity(0.5),
                             fontWeight: FontWeight.bold,
@@ -162,14 +162,14 @@ class MainDrawer extends StatelessWidget {
                 
                 DrawerNavItem(
                   icon: Icons.settings_rounded,
-                  label: AppLocalizations.of(context).translate('settings'),
+                  label: loc?.settings ?? 'Settings',
                   onTap: () => navigateTo('/settings'),
                   isSelected: currentRoute == '/settings',
                 ),
                 DrawerNavItem(
                   icon: Icons.language_rounded,
-                  label: AppLocalizations.of(context).translate('language'),
-                  onTap: () => navigateTo('/settings'),
+                  label: loc?.language ?? 'Language',
+                  onTap: () => navigateTo('/settings'), 
                   showChevron: false,
                   trailing: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
@@ -178,7 +178,7 @@ class MainDrawer extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
-                      AppLocalizations.of(context).currentLanguageName,
+                      currentLanguageDisplayName,
                       style: textTheme.bodySmall?.copyWith(
                         color: colorScheme.primary,
                         fontWeight: FontWeight.bold,
@@ -190,7 +190,6 @@ class MainDrawer extends StatelessWidget {
             ),
           ),
           
-          // App Version
           Padding(
             padding: const EdgeInsets.all(16),
             child: Row(
@@ -203,7 +202,7 @@ class MainDrawer extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  '${AppLocalizations.of(context).translate('app_version')}: $version',
+                  '${"App Version"}: $version', // Placeholder for 'app_version' key
                   style: textTheme.bodySmall?.copyWith(
                     color: colorScheme.onSurface.withOpacity(0.5),
                   ),
@@ -217,6 +216,7 @@ class MainDrawer extends StatelessWidget {
   }
 }
 
+// AnimatedMenuIcon and DrawerNavItem remain unchanged
 class AnimatedMenuIcon extends StatefulWidget {
   final bool isOpen;
   final VoidCallback onTap;
@@ -332,7 +332,6 @@ class DrawerNavItem extends StatelessWidget {
             ),
             child: Row(
               children: [
-                // Left indicator for selected item
                 if (isSelected)
                   Container(
                     width: 4,
@@ -343,16 +342,12 @@ class DrawerNavItem extends StatelessWidget {
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
-                
-                // Icon
                 Icon(
                   icon,
                   size: 22,
                   color: isSelected ? colorScheme.primary : colorScheme.onSurface.withOpacity(0.75),
                 ),
                 const SizedBox(width: 16),
-                
-                // Label
                 Expanded(
                   child: Text(
                     label,
@@ -362,8 +357,6 @@ class DrawerNavItem extends StatelessWidget {
                     ),
                   ),
                 ),
-                
-                // Trailing widget or chevron
                 if (trailing != null)
                   trailing!
                 else if (showChevron)

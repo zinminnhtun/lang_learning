@@ -23,17 +23,12 @@ class _LearningModulesScreenState extends State<LearningModulesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String appBarTitle = "Learning Modules"; // Default
-    try {
-      // Assuming 'learning_modules_title' will be available via S class
-      appBarTitle = S.of(context).translate('learning_modules_title'); // Using translate method
-    } catch (e) {
-      print('Localization key "learning_modules_title" not found, using default. Error: $e');
-    }
+    // Use placeholder as direct getter is not available on AppLocalizations (S)
+    const String appBarTitle = 'Learning Modules'; 
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(appBarTitle),
+        title: const Text(appBarTitle),
       ),
       body: FutureBuilder<List<Module>>(
         future: _modulesFuture,
@@ -43,10 +38,8 @@ class _LearningModulesScreenState extends State<LearningModulesScreen> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            String noModulesText = "No modules found."; // Default
-            // Example of trying to get a localized version, if such a key exists
-            // try { noModulesText = S.of(context).no_modules_found; } catch (e) {}
-            return Center(child: Text(noModulesText));
+            const String noModulesText = "No modules found."; // Placeholder
+            return const Center(child: Text(noModulesText));
           } else {
             final modules = snapshot.data!;
             return ListView.builder(

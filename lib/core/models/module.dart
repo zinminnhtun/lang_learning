@@ -4,7 +4,7 @@ class Module {
   final String id;
   final String title;
   final String description;
-  final String icon;      // e.g. emoji or asset path
+  final String icon; // e.g. emoji or asset path
   final List<Lesson> lessons;
 
   Module({

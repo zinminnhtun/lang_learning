@@ -4,7 +4,7 @@ import '../../core/models/module.dart';
 class LessonListScreen extends StatelessWidget {
   final Module module;
 
-  LessonListScreen({required this.module});
+  const LessonListScreen({super.key, required this.module});
 
   @override
   Widget build(BuildContext context) {

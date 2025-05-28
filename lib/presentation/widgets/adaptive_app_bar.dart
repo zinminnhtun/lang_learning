@@ -10,7 +10,7 @@ class AdaptiveAppBar extends StatelessWidget implements PreferredSizeWidget {
   final PreferredSizeWidget? bottom;
 
   const AdaptiveAppBar({
-    Key? key,
+    super.key,
     required this.title,
     this.actions,
     this.leading,
@@ -18,7 +18,7 @@ class AdaptiveAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.elevation,
     this.centerTitle = true,
     this.bottom,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +39,6 @@ class AdaptiveAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(
-      kToolbarHeight + (bottom?.preferredSize.height ?? 0.0));
-} 
+  Size get preferredSize =>
+      Size.fromHeight(kToolbarHeight + (bottom?.preferredSize.height ?? 0.0));
+}

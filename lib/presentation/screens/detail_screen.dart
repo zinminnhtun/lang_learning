@@ -3,7 +3,7 @@ import '../../data/models/word.dart';
 
 class DetailScreen extends StatelessWidget {
   final Word word;
-  DetailScreen({required this.word});
+  const DetailScreen({super.key, required this.word});
 
   @override
   Widget build(BuildContext context) {

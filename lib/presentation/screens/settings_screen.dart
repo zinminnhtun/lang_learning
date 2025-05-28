@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../../core/theme_notifier.dart';
 import '../../core/providers/language_provider.dart';
-import '../../core/localization/app_localizations.dart';
+import '../../l10n/l10n.dart'; // Changed import for gen_l10n
 import '../../core/localization/language.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -17,10 +17,11 @@ class SettingsScreen extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
-    
+    final loc = AppLocalizations.of(context); // Nullable AppLocalizations
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).translate('settings_title')),
+        title: Text(loc?.settings ?? 'Settings'), // Updated
         elevation: 0,
       ),
       body: ListView(
@@ -28,7 +29,7 @@ class SettingsScreen extends StatelessWidget {
         children: [
           // Appearance Section
           _SettingsSectionHeader(
-            title: AppLocalizations.of(context).translate('theme'),
+            title: 'Theme', // Placeholder
             icon: Icons.palette_outlined,
           ),
           Padding(
@@ -38,11 +39,11 @@ class SettingsScreen extends StatelessWidget {
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               color: colorScheme.surface,
               child: SwitchListTile(
-                title: Text(AppLocalizations.of(context).translate('dark_mode')),
+                title: Text(loc?.darkMode ?? 'Dark Mode'), // Updated
                 subtitle: Text(
                   isDark 
-                    ? 'Dark appearance is currently active' 
-                    : 'Light appearance is currently active',
+                    ? 'Dark appearance is currently active' // Placeholder/Literal
+                    : 'Light appearance is currently active', // Placeholder/Literal
                   style: textTheme.bodySmall,
                 ),
                 value: isDark,
@@ -69,7 +70,7 @@ class SettingsScreen extends StatelessWidget {
           
           // Language Section
           _SettingsSectionHeader(
-            title: AppLocalizations.of(context).translate('language'),
+            title: loc?.language ?? 'Language', // Updated
             icon: Icons.language_rounded,
           ),
           Padding(
@@ -79,6 +80,7 @@ class SettingsScreen extends StatelessWidget {
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               color: colorScheme.surface,
               child: Column(
+                // Language.supportedLanguages and _LanguageListTile remain as is
                 children: Language.supportedLanguages.map((language) {
                   final isSelected = languageProvider.currentLocale.languageCode == language.code;
                   return _LanguageListTile(
@@ -100,7 +102,7 @@ class SettingsScreen extends StatelessWidget {
           
           // Notifications Section
           _SettingsSectionHeader(
-            title: AppLocalizations.of(context).translate('notifications'),
+            title: 'Notifications', // Placeholder
             icon: Icons.notifications_outlined,
           ),
           Padding(
@@ -112,9 +114,9 @@ class SettingsScreen extends StatelessWidget {
               child: Column(
                 children: [
                   SwitchListTile(
-                    title: const Text('Learning reminders'),
-                    subtitle: const Text('Daily notifications to continue learning'),
-                    value: true,
+                    title: const Text('Learning reminders'), // Hardcoded
+                    subtitle: const Text('Daily notifications to continue learning'), // Hardcoded
+                    value: true, // Example value
                     onChanged: (val) {
                       HapticFeedback.lightImpact();
                       // Implement notification settings
@@ -133,14 +135,14 @@ class SettingsScreen extends StatelessWidget {
                   ),
                   Divider(indent: 72, height: 1),
                   SwitchListTile(
-                    title: const Text('New content'),
-                    subtitle: const Text('Notify when new modules are available'),
-                    value: true,
+                    title: const Text('New content'), // Hardcoded
+                    subtitle: const Text('Notify when new modules are available'), // Hardcoded
+                    value: true, // Example value
                     onChanged: (val) {
                       HapticFeedback.lightImpact();
                       // Implement notification settings
                     },
-                    secondary: null,
+                    secondary: null, // No icon for this one
                   ),
                 ],
               ),
@@ -152,7 +154,7 @@ class SettingsScreen extends StatelessWidget {
           // About
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: _AboutCard(),
+            child: _AboutCard(), // _AboutCard uses placeholder for its title
           ),
         ],
       ),
@@ -183,7 +185,7 @@ class _SettingsSectionHeader extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           Text(
-            title.toUpperCase(),
+            title.toUpperCase(), // Title is passed, could be localized or placeholder
             style: textTheme.titleSmall?.copyWith(
               color: colorScheme.primary,
               fontWeight: FontWeight.bold,
@@ -241,7 +243,8 @@ class _AboutCard extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
-    
+    // final loc = AppLocalizations.of(context); // Not needed here as per instructions for now
+
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -252,11 +255,11 @@ class _AboutCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              AppLocalizations.of(context).translate('about'),
+              'About', // Placeholder for 'about'
               style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
-            Text(
+            const Text( // Hardcoded as per instructions
               'Lang Fusion is a language learning app designed to help you learn new languages through immersive and interactive modules.',
               style: textTheme.bodyMedium,
             ),
@@ -267,7 +270,7 @@ class _AboutCard extends StatelessWidget {
                 OutlinedButton.icon(
                   onPressed: () {},
                   icon: const Icon(Icons.privacy_tip_outlined),
-                  label: const Text('Privacy Policy'),
+                  label: const Text('Privacy Policy'), // Hardcoded
                   style: OutlinedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -278,7 +281,7 @@ class _AboutCard extends StatelessWidget {
                 ElevatedButton.icon(
                   onPressed: () {},
                   icon: const Icon(Icons.update),
-                  label: const Text('Check for Updates'),
+                  label: const Text('Check for Updates'), // Hardcoded
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),

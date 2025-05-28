@@ -6,6 +6,7 @@ import 'language.dart';
 import 'translations/en_translations.dart';
 import 'translations/my_translations.dart';
 import 'translations/zh_translations.dart';
+import 'translations/th_translations.dart'; // Import Thai translations
 
 class AppLocalizations {
   final Locale locale;
@@ -31,6 +32,9 @@ class AppLocalizations {
       case 'zh':
         _localizedStrings = zhTranslations;
         break;
+      case 'th': // Add case for Thai
+        _localizedStrings = thTranslations;
+        break;
       default:
         _localizedStrings = enTranslations;
     }
@@ -54,7 +58,7 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   // Include all supported language codes here
   @override
   bool isSupported(Locale locale) {
-    return ['en', 'my', 'zh'].contains(locale.languageCode);
+    return ['en', 'my', 'zh', 'th'].contains(locale.languageCode); // Add 'th'
   }
   
   @override

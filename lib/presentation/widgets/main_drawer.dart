@@ -272,7 +272,7 @@ class _AnimatedMenuIconState extends State<AnimatedMenuIcon>
             icon: AnimatedIcons.menu_close,
             progress: _controller,
             size: 28,
-            color: AppTheme.secondary,
+            color: Theme.of(context).colorScheme.secondary,
           ),
         ),
       ),

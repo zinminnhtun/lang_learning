@@ -32,6 +32,12 @@ class Language {
       nativeName: '中文',
       flag: '🇨🇳',
     ),
+    Language(
+      code: 'th',
+      name: 'Thai',
+      nativeName: 'ภาษาไทย',
+      flag: '🇹🇭',
+    ),
   ];
 
   // Get language by code

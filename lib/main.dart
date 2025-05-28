@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // Use AppLocalizations for userName, and placeholders for others
     final String userName = AppLocalizations.of(context)?.yourName ?? 'User Name';
     const String userSubtitle = 'Student'; // Placeholder
-    final String currentTitle = AppLocalizations.of(context)?.modules ?? 'Modules'; // Using getter if available, else placeholder
+    const String currentTitle = 'Modules'; // Placeholder
 
     final mainDrawer = app_drawer.MainDrawer(
       userName: userName,
